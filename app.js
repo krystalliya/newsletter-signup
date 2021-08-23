@@ -1,3 +1,6 @@
+//this is for the app to load the .env file for the api key
+require('dotenv').config(); 
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
@@ -37,11 +40,11 @@ app.post("/", function(req, res){
   //turn it into a flatpack json data, and this is what we gonna send to mail chimp
   const jsonData = JSON.stringify(data);
 
-  const url = "https://us6.api.mailchimp.com/3.0/lists/0273c24da5";
+  const url = "https://us6.api.mailchimp.com/3.0/lists/" + process.env.MAILCHIMP_LIST_ID;
 
   const options = {
     method: "POST",
-    auth: "Una1:bc1cb18c1a67289be63bd326a2bae209-us6"
+    auth: "Una1:" + process.env.MAILCHIMP_API_KEY
   }
 
   //to request data from the url
@@ -72,9 +75,3 @@ app.post("/failure", function(req, res){
 app.listen(process.env.PORT || 3000, function(){
   console.log("Server is running on port 3000.");
 })
-
-//API key
-//bc1cb18c1a67289be63bd326a2bae209-us6
-
-//List id
-//0273c24da5
